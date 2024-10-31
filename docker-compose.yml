@@ -1,0 +1,25 @@
+---
+version: '3'
+services:
+  mqtt:
+    image: vernemq/vernemq:latest
+    container_name: mqttBroker
+    hostname: mqtt
+    environment:
+      DOCKER_VERNEMQ_USER_mqttWithProtobuf: 'password'
+      DOCKER_VERNEMQ_ACCEPT_EULA: "yes"
+      DOCKER_VERNEMQ_ALLOW_ANONYMOUS: "on"
+    restart: always
+    ports:
+      - "1883:1883"
+      - "8080:8080"
+    volumes:
+      - volumes/mqttWithProtobuf/vernemq/log:/var/log/vernemq
+      - volumes/mqttWithProtobuf/vernemq/lib:/var/lib/vernemq
+      - volumes/mqttWithProtobuf/vernemq/etc:/etc/vernemq
+    networks:
+      - mqttWithProtobuf_net
+      
+networks:
+  mqttWithProtobuf_net:
+    driver: bridge

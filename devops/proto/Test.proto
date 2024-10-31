@@ -1,0 +1,8 @@
+syntax = "proto3";
+package test;
+
+option csharp_namespace = "Dotnet.Protobuf.Test";
+
+message Test {
+    string msg = 3;
+}

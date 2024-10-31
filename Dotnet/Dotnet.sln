@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dotnet.Mqtt", "Dotnet.Mqtt\Dotnet.Mqtt.csproj", "{EA95E0F1-B186-40DD-A01D-7D4B87B77DEB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dotnet.Protobuf", "Dotnet.Protobuf\Dotnet.Protobuf.csproj", "{F8441446-6458-4B95-8DC4-FE041BE4F9EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dotnet.Worker", "Dotnet.Worker\Dotnet.Worker.csproj", "{9142C864-5244-48E4-B4DA-5E6812E0A0FD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B4B0AE7D-8624-4296-A685-CEC81D04D405}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4B0AE7D-8624-4296-A685-CEC81D04D405}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4B0AE7D-8624-4296-A685-CEC81D04D405}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4B0AE7D-8624-4296-A685-CEC81D04D405}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA95E0F1-B186-40DD-A01D-7D4B87B77DEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA95E0F1-B186-40DD-A01D-7D4B87B77DEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA95E0F1-B186-40DD-A01D-7D4B87B77DEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA95E0F1-B186-40DD-A01D-7D4B87B77DEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8441446-6458-4B95-8DC4-FE041BE4F9EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8441446-6458-4B95-8DC4-FE041BE4F9EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8441446-6458-4B95-8DC4-FE041BE4F9EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8441446-6458-4B95-8DC4-FE041BE4F9EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9142C864-5244-48E4-B4DA-5E6812E0A0FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9142C864-5244-48E4-B4DA-5E6812E0A0FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9142C864-5244-48E4-B4DA-5E6812E0A0FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9142C864-5244-48E4-B4DA-5E6812E0A0FD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
