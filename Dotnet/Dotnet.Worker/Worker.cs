@@ -57,7 +57,7 @@ public class Worker(IMqttService mqttService, ILoggerFactory loggerFactory, AppS
 
     private void OnMqttConnected(object? sender, EventArgs e)
     {
-        mqttService.CreateSubscriptions(mqttRegistry.GetAllSubscriptions());
+        mqttService.Subscribe(mqttRegistry.GetAllSubscriptions());
 
         //send connect info if needed
     }

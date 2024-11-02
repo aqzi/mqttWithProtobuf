@@ -3,20 +3,15 @@ using Proto = Dotnet.Protobuf;
 
 namespace Dotnet.Mqtt.MqttHandlers;
 
-public class TestHandler : IMqttHandler
+public class TestHandler(IMqttService mqttService) : IMqttHandler
 {
-    private readonly IMqttService mqttService;
-    private readonly List<string> subscriptions = new()
-    {
+    private readonly IMqttService mqttService = mqttService;
+    private readonly List<string> subscriptions =
+    [
         "state/test2/#",
-    };
+    ];
 
-    public TestHandler(IMqttService mqttService)
-    {
-        this.mqttService = mqttService;
-    }
-
-    public List<string> Subscribe()
+    public List<string> GetSubscriptions()
     {
         return subscriptions;
     }
@@ -33,12 +28,12 @@ public class TestHandler : IMqttHandler
                 //Echo message
                 Proto.Test.Test msg = new()
                 {
-                    Msg = test.Msg
+                    Msg = $"Echo: {test.Msg}",
                 };
 
                 Console.WriteLine("---------------- " + msg.GetType());
                 
-                mqttService.Send(MqttAction.STATE, "testServerMsg", "server", "Test.Test", msg.ToByteArray());
+                mqttService.Publish(MqttAction.STATE, "testWorkerMsg", "worker", "Test.Test", msg.ToByteArray());
 
                 break;
             default:

@@ -21,9 +21,9 @@ public interface IMqttService
     Task StartAsync(CancellationToken stoppingToken);
     Task StopAsync();
 
-    Task Send(MqttAction action, string target, string actorId, string messageType, byte[] bytes);
+    Task Publish(MqttAction action, string target, string actorId, string messageType, byte[] bytes);
 
-    void CreateSubscriptions(List<string> topics);
+    void Subscribe(List<string> topics);
 }
 
 public class MqttService : IMqttService
@@ -59,7 +59,7 @@ public class MqttService : IMqttService
         var optionsBuilder = new MqttClientOptionsBuilder()
             .WithTcpServer(settings.Host, settings.Port)
             .WithCredentials(settings.User, settings.Password)
-            .WithClientId($"VerticleFarmingBackend-{settings.ClientId}-{DateTimeOffset.Now.ToUnixTimeSeconds()}")
+            .WithClientId($"{settings.ClientId}-{DateTimeOffset.Now.ToUnixTimeSeconds()}")
             .WithKeepAlivePeriod(TimeSpan.FromSeconds(5))
             .WithProtocolVersion(MqttProtocolVersion.V500);
 
@@ -123,18 +123,14 @@ public class MqttService : IMqttService
         await mqttClient.DisconnectAsync();
     }
 
-    public async Task Send(MqttAction action, string target, string actorId, string messageType, byte[] bytes)
+    public async Task Publish(MqttAction action, string target, string actorId, string messageType, byte[] bytes)
     {
         if (mqttClient != null && mqttClient.IsConnected)
         {
             try
             {
-                
-                //create a guid
-                var guid = Guid.NewGuid().ToString();
-
                 var msg = new MqttApplicationMessageBuilder()
-                    .WithTopic($"{action.ToString().ToLower()}/{target}/{guid}/{messageType}")
+                    .WithTopic($"{action.ToString().ToLower()}/{target}/{actorId}/{messageType}")
                     .WithPayload(bytes)
                     .WithQualityOfServiceLevel(MQTTnet.Protocol.MqttQualityOfServiceLevel.AtLeastOnce)
                     .WithRetainFlag()
@@ -151,7 +147,7 @@ public class MqttService : IMqttService
         }
     }
 
-    public void CreateSubscriptions(List<string> topics)
+    public void Subscribe(List<string> topics)
     {
         if (mqttClient != null && mqttClient.IsConnected)
         {

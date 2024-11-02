@@ -34,7 +34,7 @@ public class MqttRegistry : IMqttRegistry
 
         if (messagesAssembly != null)
         {
-            var messageTypes = messagesAssembly.GetTypes().Where(t => t.FullName != null && t.FullName.StartsWith($"Dotnet.Protobuf.")).ToList();
+            var messageTypes = messagesAssembly.GetTypes().Where(t => t.FullName != null && t.FullName.StartsWith($"Dotnet.Protobuf")).ToList();
 
             foreach (var type in messageTypes)
             {
@@ -67,7 +67,7 @@ public class MqttRegistry : IMqttRegistry
                 if (constructor != null) handler = (IMqttHandler)Activator.CreateInstance(type, mqttService)!;
                 else handler = (IMqttHandler)Activator.CreateInstance(type)!;
 
-                var topics = handler.Subscribe();
+                var topics = handler.GetSubscriptions();
 
                 //store the handler with corresponding topic in the tree structure
                 foreach (var topic in topics)

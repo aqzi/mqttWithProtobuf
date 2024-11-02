@@ -2,18 +2,13 @@ using System.Collections;
 
 namespace Dotnet.Mqtt.Utils;
 
-public class TreeNode : IEnumerable<TreeNode>
+public class TreeNode(string topic) : IEnumerable<TreeNode>
 {
-    private readonly Dictionary<string, TreeNode> children = new();
+    private readonly Dictionary<string, TreeNode> children = [];
 
-    public readonly string Topic;
-    public List<IMqttHandler> Handlers = new();
+    public readonly string Topic = topic;
+    public List<IMqttHandler> Handlers = [];
     public TreeNode? Parent { get; set; }
-
-    public TreeNode(string topic)
-    {
-        this.Topic = topic;
-    }
 
     public TreeNode GetChild(string topic)
     {
@@ -22,7 +17,7 @@ public class TreeNode : IEnumerable<TreeNode>
 
     public List<TreeNode> GetChildren()
     {
-        return children.Values.ToList();
+        return [.. children.Values];
     }
 
     public IEnumerator<TreeNode> GetEnumerator()
@@ -153,12 +148,12 @@ public class TreeNode : IEnumerable<TreeNode>
             return null;
         }
 
-        List<IMqttHandler> handlers = new();
-        List<TreeNode> current = new() { root };
+        List<IMqttHandler> handlers = [];
+        List<TreeNode> current = [root];
 
         foreach (var t in topics)
         {
-            List<TreeNode> next = new();
+            List<TreeNode> next = [];
 
             foreach (var c in current)
             {
