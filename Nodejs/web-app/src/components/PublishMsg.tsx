@@ -1,8 +1,5 @@
-import { useEffect } from "react";
-import { Test } from "./protobuf/Test";
-import { Components } from "./protobuf";
-import { useMqttClient } from "./mqtt/MqttContext";
-import useSubscription from "./mqtt/UseSubscription";
+import { Test } from "../protobuf/Test";
+import { useMqttClient } from "../mqtt/MqttContext";
 
 const PublishMsg = () => {
     const { publish } = useMqttClient();
@@ -19,10 +16,10 @@ const PublishMsg = () => {
     return (
         <div className="mt-50">
             <button 
-                className="bg-blue-500" 
+                className="bg-blue-500 p-2" 
                 onClick={onSubmit}
             >
-                Send message to .NET worker
+                Send message
             </button>
         </div>
     )

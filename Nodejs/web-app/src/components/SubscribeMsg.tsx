@@ -1,5 +1,5 @@
-import { Test } from "./protobuf/Test";
-import useSubscription from "./mqtt/UseSubscription";
+import { Test } from "../protobuf/Test";
+import useSubscription from "../mqtt/UseSubscription";
 
 const SubscribeMsg = () => {
     const {message} = useSubscription('event/testWorker/#');
