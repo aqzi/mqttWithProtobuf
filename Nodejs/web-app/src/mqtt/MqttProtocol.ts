@@ -1,5 +1,3 @@
-import { Timestamp } from "google-protobuf/google/protobuf/timestamp_pb";
-import { MessageFns } from "../protobuf/Test";
 import { Components } from "../protobuf";
 
 export enum ConnectionState {
@@ -12,15 +10,9 @@ export enum ConnectionState {
 export type MqttActions = 'state' | 'command' | 'event';
 export type MqttTopicPrefixType = { action: MqttActions, target: string };
 
-export type MqttPublishMessage<T> = {
+export type MqttMessage<T> = {
 	topicPrefix: MqttTopicPrefixType,
 	actorId: string,
 	msgClass: keyof typeof Components,
 	payload: T
-}
-
-export type MqttSubscribeToTopic<T> = {
-	topicPrefix: MqttTopicPrefixType,
-	actorId?: string,
-	msgClass?: MessageFns<T>,
 }

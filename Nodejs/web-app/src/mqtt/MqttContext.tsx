@@ -1,14 +1,13 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import mqtt, { IClientOptions, IClientPublishOptions, MqttClient } from 'mqtt';
-import { MqttSubscribeToTopic, MqttPublishMessage } from './MqttProtocol';
+import { MqttMessage } from './mqttProtocol';
 import { Buffer } from 'buffer';
 import { Components } from '../protobuf';
 
 interface MqttContextType {
     client: MqttClient | null;
     isConnected: boolean;
-    publish: <T>(msg: MqttPublishMessage<T>, opts?: IClientPublishOptions) => void;
-    subscribe: <T>(topic: MqttSubscribeToTopic<T>) => void;
+    publish: <T>(msg: MqttMessage<T>, opts?: IClientPublishOptions) => void;
 }
 
 const MqttContext = createContext<MqttContextType | undefined>(undefined);
@@ -41,7 +40,7 @@ const MqttProvider: React.FC<{ brokerUrl: string, opts: IClientOptions, children
         };
     }, [brokerUrl, opts]);
 
-    function publish <T>(msg: MqttPublishMessage<T>, opts?: IClientPublishOptions) {
+    function publish <T>(msg: MqttMessage<T>, opts?: IClientPublishOptions) {
 		if (client && isConnected) {
             const encoding = Components[msg.msgClass].encode(msg.payload as any).finish();
 			const buffer = Buffer.from(encoding);
@@ -57,25 +56,8 @@ const MqttProvider: React.FC<{ brokerUrl: string, opts: IClientOptions, children
         }
 	};
 
-    function subscribe <T>(topic: MqttSubscribeToTopic<T>) {
-        if (client && isConnected) {
-            const actorId = topic.actorId ? `/${topic.actorId}` : '';
-            const msgType = topic.msgClass ? `/${topic.msgClass.toString()}` : '';
-            
-            const result = `${topic.topicPrefix.action}/${topic.topicPrefix.target}` + actorId + msgType;
-
-            client.subscribe(result, (err) => {
-                if (err) {
-                    console.error(`Failed to subscribe to topic ${topic}:`, err);
-                }
-            });
-        } else {
-            console.error('Client not connected');
-        }
-    };
-
     return (
-        <MqttContext.Provider value={{ client, isConnected, publish, subscribe }}>
+        <MqttContext.Provider value={{ client, isConnected, publish }}>
             {children}
         </MqttContext.Provider>
     );

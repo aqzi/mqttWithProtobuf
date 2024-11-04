@@ -3,20 +3,14 @@ import { useContext, useEffect, useCallback, useState } from 'react';
 import { IClientSubscribeOptions, MqttClient } from 'mqtt';
 
 import { useMqttClient } from './MqttContext';
-import { matches } from './utils/mqttHelpers';
+import { matches } from './mqttTopicVerifier';
 import { Components } from '../protobuf';
-import { MqttActions, MqttPublishMessage } from './MqttProtocol';
-
-// interface IMessage {
-//     topic: string;
-//     msgClass: keyof typeof Components;
-//     payload: any;
-// }
+import { MqttActions, MqttMessage } from './mqttProtocol';
 
 interface IUseSubscription {
     topic: string | string[];
     client?: MqttClient | null;
-    message?: MqttPublishMessage<any>;
+    message?: MqttMessage<any>;
     isConnected: boolean;
 }
 
@@ -26,7 +20,7 @@ export default function useSubscription(
 ): IUseSubscription {
     const { client, isConnected } = useMqttClient()
 
-    const [message, setMessage] = useState<MqttPublishMessage<any>|undefined>();
+    const [message, setMessage] = useState<MqttMessage<any>|undefined>();
 
     const subscribe = useCallback(async () => {
         client?.subscribe(topic, options);
