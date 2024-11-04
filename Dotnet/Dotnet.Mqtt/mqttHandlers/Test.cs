@@ -8,7 +8,7 @@ public class TestHandler(IMqttService mqttService) : IMqttHandler
     private readonly IMqttService mqttService = mqttService;
     private readonly List<string> subscriptions =
     [
-        "state/test2/#",
+        "event/test/#",
     ];
 
     public List<string> GetSubscriptions()
@@ -22,18 +22,19 @@ public class TestHandler(IMqttService mqttService) : IMqttHandler
 
         switch(message)
         {
-            case Proto.Test.Test test:
+            case Proto.Test test:
                 Console.WriteLine("Test1 received");
 
                 //Echo message
-                Proto.Test.Test msg = new()
+                Proto.Test msg = new()
                 {
-                    Msg = $"Echo: {test.Msg}",
+                    Timestamp = test.Timestamp,
+                    Msg = $"Echo through worker => {test.Msg}",
                 };
 
                 Console.WriteLine("---------------- " + msg.GetType());
                 
-                mqttService.Publish(MqttAction.STATE, "testWorkerMsg", "worker", "Test.Test", msg.ToByteArray());
+                mqttService.Publish(MqttAction.EVENT, "testWorker", "worker", "Test", msg.ToByteArray());
 
                 break;
             default:

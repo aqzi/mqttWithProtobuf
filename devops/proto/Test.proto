@@ -1,8 +1,11 @@
 syntax = "proto3";
 package test;
 
-option csharp_namespace = "Dotnet.Protobuf.Test";
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "Dotnet.Protobuf";
 
 message Test {
-    string msg = 3;
+    google.protobuf.Timestamp timestamp = 1;
+    string msg = 2;
 }

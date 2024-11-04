@@ -30,7 +30,7 @@ public class MqttRegistry : IMqttRegistry
 
     private void CacheParsers()
     {
-        var messagesAssembly = Assembly.GetAssembly(typeof(Protobuf.Test.Test));
+        var messagesAssembly = Assembly.GetAssembly(typeof(Protobuf.Test));
 
         if (messagesAssembly != null)
         {

@@ -9,7 +9,7 @@ using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
-namespace Dotnet.Protobuf.Test {
+namespace Dotnet.Protobuf {
 
   /// <summary>Holder for reflection information generated from Test.proto</summary>
   public static partial class TestReflection {
@@ -24,12 +24,14 @@ namespace Dotnet.Protobuf.Test {
     static TestReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "CgpUZXN0LnByb3RvEgR0ZXN0IhMKBFRlc3QSCwoDbXNnGAMgASgJQheqAhRE",
-            "b3RuZXQuUHJvdG9idWYuVGVzdGIGcHJvdG8z"));
+            "CgpUZXN0LnByb3RvEgR0ZXN0Gh9nb29nbGUvcHJvdG9idWYvdGltZXN0YW1w",
+            "LnByb3RvIkIKBFRlc3QSLQoJdGltZXN0YW1wGAEgASgLMhouZ29vZ2xlLnBy",
+            "b3RvYnVmLlRpbWVzdGFtcBILCgNtc2cYAiABKAlCEqoCD0RvdG5ldC5Qcm90",
+            "b2J1ZmIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { },
+          new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Dotnet.Protobuf.Test.Test), global::Dotnet.Protobuf.Test.Test.Parser, new[]{ "Msg" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Dotnet.Protobuf.Test), global::Dotnet.Protobuf.Test.Parser, new[]{ "Timestamp", "Msg" }, null, null, null, null)
           }));
     }
     #endregion
@@ -51,7 +53,7 @@ namespace Dotnet.Protobuf.Test {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Dotnet.Protobuf.Test.TestReflection.Descriptor.MessageTypes[0]; }
+      get { return global::Dotnet.Protobuf.TestReflection.Descriptor.MessageTypes[0]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -71,6 +73,7 @@ namespace Dotnet.Protobuf.Test {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public Test(Test other) : this() {
+      timestamp_ = other.timestamp_ != null ? other.timestamp_.Clone() : null;
       msg_ = other.msg_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -81,8 +84,20 @@ namespace Dotnet.Protobuf.Test {
       return new Test(this);
     }
 
+    /// <summary>Field number for the "timestamp" field.</summary>
+    public const int TimestampFieldNumber = 1;
+    private global::Google.Protobuf.WellKnownTypes.Timestamp timestamp_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Google.Protobuf.WellKnownTypes.Timestamp Timestamp {
+      get { return timestamp_; }
+      set {
+        timestamp_ = value;
+      }
+    }
+
     /// <summary>Field number for the "msg" field.</summary>
-    public const int MsgFieldNumber = 3;
+    public const int MsgFieldNumber = 2;
     private string msg_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -108,6 +123,7 @@ namespace Dotnet.Protobuf.Test {
       if (ReferenceEquals(other, this)) {
         return true;
       }
+      if (!object.Equals(Timestamp, other.Timestamp)) return false;
       if (Msg != other.Msg) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -116,6 +132,7 @@ namespace Dotnet.Protobuf.Test {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
+      if (timestamp_ != null) hash ^= Timestamp.GetHashCode();
       if (Msg.Length != 0) hash ^= Msg.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -135,8 +152,12 @@ namespace Dotnet.Protobuf.Test {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
+      if (timestamp_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(Timestamp);
+      }
       if (Msg.Length != 0) {
-        output.WriteRawTag(26);
+        output.WriteRawTag(18);
         output.WriteString(Msg);
       }
       if (_unknownFields != null) {
@@ -149,8 +170,12 @@ namespace Dotnet.Protobuf.Test {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (timestamp_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(Timestamp);
+      }
       if (Msg.Length != 0) {
-        output.WriteRawTag(26);
+        output.WriteRawTag(18);
         output.WriteString(Msg);
       }
       if (_unknownFields != null) {
@@ -163,6 +188,9 @@ namespace Dotnet.Protobuf.Test {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
+      if (timestamp_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Timestamp);
+      }
       if (Msg.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Msg);
       }
@@ -177,6 +205,12 @@ namespace Dotnet.Protobuf.Test {
     public void MergeFrom(Test other) {
       if (other == null) {
         return;
+      }
+      if (other.timestamp_ != null) {
+        if (timestamp_ == null) {
+          Timestamp = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+        }
+        Timestamp.MergeFrom(other.Timestamp);
       }
       if (other.Msg.Length != 0) {
         Msg = other.Msg;
@@ -196,7 +230,14 @@ namespace Dotnet.Protobuf.Test {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
-          case 26: {
+          case 10: {
+            if (timestamp_ == null) {
+              Timestamp = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+            }
+            input.ReadMessage(Timestamp);
+            break;
+          }
+          case 18: {
             Msg = input.ReadString();
             break;
           }
@@ -215,7 +256,14 @@ namespace Dotnet.Protobuf.Test {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
-          case 26: {
+          case 10: {
+            if (timestamp_ == null) {
+              Timestamp = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+            }
+            input.ReadMessage(Timestamp);
+            break;
+          }
+          case 18: {
             Msg = input.ReadString();
             break;
           }

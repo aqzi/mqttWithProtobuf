@@ -13,5 +13,12 @@
             "cwd": "${workspaceFolder}/Dotnet/Dotnet.Worker",
             "stopAtEntry": false,
         },
+        {
+            "name": "debug web app",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceFolder}/Nodejs/web-app",
+        }
     ]
 }

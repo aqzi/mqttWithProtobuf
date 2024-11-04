@@ -1,25 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { MqttProvider } from './mqtt/MqttContext';
+import { IClientOptions } from 'mqtt/*';
+import PublishMsg from './PublishMsg';
+import SubscribeMsg from './SubscribeMsg';
 
 function App() {
+  const opts: IClientOptions = {
+		clientId: "frontend",
+		username: "frontend",
+		password: "password",
+		reconnectPeriod: 1000,
+		keepalive: 5,
+		rejectUnauthorized: false,
+		protocolVersion: 5,
+		port: 8080,
+	};
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <body className="App">
+      <MqttProvider brokerUrl="ws://localhost/mqtt" opts={opts}>
+	  	<h1>Demo MQTT application</h1>
+        <PublishMsg/>
+		<SubscribeMsg/>
+      </MqttProvider>
+    </body>
   );
 }
 
