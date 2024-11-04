@@ -23,16 +23,11 @@ public class TestHandler(IMqttService mqttService) : IMqttHandler
         switch(message)
         {
             case Proto.Test test:
-                Console.WriteLine("Test1 received");
-
-                //Echo message
                 Proto.Test msg = new()
                 {
                     Timestamp = test.Timestamp,
                     Msg = $"Echo through worker => {test.Msg}",
                 };
-
-                Console.WriteLine("---------------- " + msg.GetType());
                 
                 mqttService.Publish(MqttAction.EVENT, "testWorker", "worker", "Test", msg.ToByteArray());
 

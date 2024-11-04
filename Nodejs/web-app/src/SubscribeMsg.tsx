@@ -9,7 +9,7 @@ const SubscribeMsg = () => {
     const payload = message.payload as Test;
     
     return (
-        <div className="subscribeMsg">
+        <div className="mt-20">
             <p>Received Message: {payload.msg}</p>
             <p>Timestamp: {payload.timestamp?.toString()}</p>
         </div>

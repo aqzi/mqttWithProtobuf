@@ -17,9 +17,24 @@ function App() {
 	};
   
   return (
-    <body className="App">
+    <body className="App flex flex-col items-center">
       <MqttProvider brokerUrl="ws://localhost/mqtt" opts={opts}>
-	  	<h1>Demo MQTT application</h1>
+	  	<h1 className='text-5xl mb-20'>Demo MQTT application</h1>
+		<div className='flex flex-col border rounded-lg text-xl text-left p-4 mb-20'>
+			<h2 className='text-3xl underline'>Backend topic info</h2>
+			<div className='flex flex-col'>
+				<h3 className='mt-5 text-2xl'>.Net:</h3>
+				<ul>
+					<li>- MsgHandler: TestHandler, MsgClass: Test, SubscribeTopic: event/test/#, PublishTopic: event/testWorker/worker/Test</li>
+				</ul>
+			</div>
+			<div className='flex flex-col'>
+				<h3 className='mt-5 text-2xl'>Python:</h3>
+				<ul>
+					<li>- MsgHandler: TestHandler, MsgClass: Test, PublishTopic: ..., SubscribeTopic: ...</li>
+				</ul>
+			</div>
+		</div>
         <PublishMsg/>
 		<SubscribeMsg/>
       </MqttProvider>

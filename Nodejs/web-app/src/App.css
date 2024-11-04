@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .App {
   text-align: center;
 }
@@ -41,12 +45,4 @@ body {
   height: 100vh;
   background-color: #282c34;
   color: white;
-}
-
-.publishMsg {
-  margin-top: 100px;
-}
-
-.subscribeMsg {
-  margin-top: 30px;
 }

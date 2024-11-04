@@ -17,8 +17,13 @@ const PublishMsg = () => {
     };
 
     return (
-        <div className="publishMsg">
-            <button onClick={onSubmit}>Send message to .NET worker</button>
+        <div className="mt-50">
+            <button 
+                className="bg-blue-500" 
+                onClick={onSubmit}
+            >
+                Send message to .NET worker
+            </button>
         </div>
     )
 }
