@@ -22,7 +22,7 @@ export default function useSubscription(
 
     const [message, setMessage] = useState<MqttMessage<any>|undefined>();
 
-    const subscribe = useCallback(async () => {
+    const subscribe = useCallback(async (topic: string|string[]) => {
         client?.subscribe(topic, options);
     }, [client, options, topic]);
 
@@ -54,7 +54,7 @@ export default function useSubscription(
 
     useEffect(() => {
         if (isConnected) {
-            subscribe();
+            subscribe(topic);
 
             client!.on('message', callback);
         }
