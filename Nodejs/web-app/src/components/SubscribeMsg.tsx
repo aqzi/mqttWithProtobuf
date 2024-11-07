@@ -8,7 +8,7 @@ const SubscribeMsg = () => {
 
     const counter = useRef(0);
     
-    const {message} = useSubscription('event/testWorker/#');
+    const {message} = useSubscription('event/testPython/#');
 
     useEffect(() => {
         if (message) {
