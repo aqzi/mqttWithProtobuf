@@ -74,23 +74,6 @@ public class Worker(IMqttService mqttService, ILoggerFactory loggerFactory, AppS
         {
             var message = parser.ParseFrom(e.ApplicationMessage.PayloadSegment);
 
-            // Timestamp? timestamp = message.Descriptor.FindFieldByName("timestamp").Accessor.GetValue(message) as Timestamp;
-            // var msgDateTime = timestamp?.ToDateTime().ToLocalTime();
-            // var now = DateTime.Now;
-
-            // if (msgDateTime == null) //there is no timestamp: Tell to actor
-            // {
-            //     Console.WriteLine($"{messageTypeName} has no timestamp !");
-            // }
-            // else if (now.Ticks - msgDateTime.Value.Ticks < 30000000) //there is a timestamp: only Tell to actor if message is no older than 3 sec
-            // {
-            //     Console.WriteLine($"{messageTypeName} sent at {msgDateTime.Value.ToString("HH:mm:ss.fff")} now: {now.ToString("HH:mm:ss.fff")} diff ticks: {now.Ticks - msgDateTime.Value.Ticks}");
-            // }
-            // else
-            // {
-            //     logger.LogError($"Command {messageTypeName} was delivered too late. Sent at {msgDateTime.Value.ToString("HH:mm:ss.fff")} now: {now.ToString("HH:mm:ss.fff")} diff ticks: {now.Ticks - msgDateTime.Value.Ticks}");
-            // }
-
             if(mqttRegistry.TryGetHandlers(e.ApplicationMessage.Topic, out List<IMqttHandler>? handlers) && handlers != null)
             {
                 foreach (var handler in handlers)

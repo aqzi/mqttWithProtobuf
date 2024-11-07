@@ -1,4 +1,6 @@
 import paho.mqtt.client as mqtt
+import protobuf.Test_pb2 as test
+from datetime import datetime
 
 
 # Callback on connection
@@ -11,8 +13,16 @@ def on_connect(client: mqtt.Client, userdata, flags, rc):
     client.subscribe('languages/+')
     client.subscribe('game/+/move')
 
+    test_msg = test.Test()
+    test_msg.msg = 'Hello, World!'
+
+    specific_datetime = datetime(2024, 11, 6, 12, 0, 0)
+    test_msg.timestamp = specific_datetime
+
+    msg = test_msg.SerializeToString()
+
     # Examples of publishing messages to different types of subscriptions
-    client.publish('foo', payload='bar')
+    client.publish('foo', payload=msg)
     client.publish('foo/foo', payload='will not be seen, no one is subscribed to this topic')
 
     client.publish('hello', payload='world')
@@ -28,7 +38,15 @@ def on_connect(client: mqtt.Client, userdata, flags, rc):
 
 # Callback when message is received
 def on_message(client: mqtt.Client, userdata, msg):
-    print(f'Message received on topic: {msg.topic}. Message: {msg.payload.decode('utf-8')}')
+    print(f'Message received on topic: {msg.topic}. Message: {msg.payload}')
+
+    if msg.topic == 'foo':
+        test_msg = test.Test()
+        test_msg.ParseFromString(msg.payload)
+        print(f'Parsed message: {test_msg.msg}, Timestamp: {test_msg.timestamp}')
+
+def on_disconnect(client: mqtt.Client, userdata, rc):
+    print(f'Disconnected (Result: {rc})')
 
 
 # If using websockets (protocol is ws or wss), must set the transport for the client as below
@@ -36,6 +54,7 @@ client = mqtt.Client(transport='websockets')
 
 client.on_connect = on_connect
 client.on_message = on_message
+client.on_disconnect = on_disconnect
 
 client.username_pw_set('python', 'password')
 
