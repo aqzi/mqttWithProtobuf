@@ -1,0 +1,2 @@
+- update the proto_generate.sh file such that it generates the index.ts file inside Nodejs/web-app/src/protobuf
+- make the mqtt service in all projects async
