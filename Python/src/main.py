@@ -1,5 +1,6 @@
 import asyncio
 import paho.mqtt.client as mqtt
+from mqtt.mqtt_manager import MqttManager
 from mqtt.mqtt_registry import MqttRegistry
 from mqtt.mqtt_service import MqttService
 from mqtt.mqtt_settings import MqttSettings
@@ -70,24 +71,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-async def main():
-    # Load settings from environment
-    mqtt_settings = MqttSettings.from_env()
-
-    # Create a registry to store handlers and message parsers
-    mqtt_registry = MqttRegistry()
-
-    # Instantiate the MqttService with settings
-    mqtt_service = MqttService(mqtt_settings, mqtt_registry)
-
-    # Connect to the broker
-    await mqtt_service.connect()
-
-    try:
-        while True:
-            await asyncio.sleep(1)  # Keep the main async loop alive
-    except asyncio.CancelledError:
-        await mqtt_service.disconnect()
+def main():
+    MqttManager()
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()

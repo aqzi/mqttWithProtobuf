@@ -1,82 +1,57 @@
 import asyncio
 from datetime import datetime
 import logging
-from typing import List
+from typing import Any, Callable, List
 import paho.mqtt.client as mqtt
-from mqtt.mqtt_registry import MqttRegistry
 import protobuf.Test_pb2 as test
 from mqtt.mqtt_protocol import MqttAction
 from mqtt.mqtt_settings import MqttSettings
 
 class MqttService:
-    def __init__(self, mqtt_settings: MqttSettings, mqtt_registry: MqttRegistry):
+    def __init__(self, mqtt_settings: MqttSettings):
         self.logger = logging.getLogger(__name__)
 
         self.mqtt_settings = mqtt_settings
-        self.mqtt_registry = mqtt_registry
+
+        self.on_connect_callback: Callable[[mqtt.Client, Any, Any, int], None]
+        self.on_disconnect_callback: Callable[[mqtt.Client, Any, int], None]
+        self.on_message_callback: Callable[[mqtt.MQTTMessage], None]
+
+    def start_mqtt(self):
+        print(f"Connecting to {self.mqtt_settings.host}:{self.mqtt_settings.port}")
 
         self.client = mqtt.Client(transport='websockets')
 
-        self.client.username_pw_set(mqtt_settings.user, mqtt_settings.password)
+        self.client.username_pw_set(self.mqtt_settings.user, self.mqtt_settings.password)
 
         # Certificate is required when using TLS endpoint (mqtts, wss, ssl)!
-        if mqtt_settings.is_tls_enabled:
+        if self.mqtt_settings.is_tls_enabled:
             self.client.tls_set()
 
         self.client.on_connect = self.on_connect
         self.client.on_message = self.on_message
         self.client.on_disconnect = self.on_disconnect
 
-    async def connect(self):
-        # Start the client loop in a background thread
-        self.client.loop_start()
-        
-        print(f"Connecting to {self.mqtt_settings.host}:{self.mqtt_settings.port}")
-        await asyncio.to_thread(self.client.connect, self.mqtt_settings.host, self.mqtt_settings.port)
+        self.client.connect(self.mqtt_settings.host, port=self.mqtt_settings.port, keepalive=5,)
 
-    async def disconnect(self):
-        # Disconnect and stop the loop
-        await asyncio.to_thread(self.client.disconnect)
-        self.client.loop_stop()
+        self.client.loop_forever()
+
+    def stop_mqtt(self):
+        self.client.disconnect()
 
     def on_connect(self, client: mqtt.Client, userdata, flags, rc: int):
-        if rc == 0:
-            print("Connected to MQTT Broker!")
-        else:
-            print(f"Failed to connect, return code {rc}")
-
-        #TODO: remove following!
-        self.client.subscribe('event/testje/#')
-
-        test_msg = test.Test()
-        test_msg.msg = 'Hello, World!'
-
-        specific_datetime = datetime(2024, 11, 6, 12, 0, 0)
-        test_msg.timestamp = specific_datetime
-
-        msg = test_msg.SerializeToString()
-
-        # Examples of publishing messages to different types of subscriptions
-        self.client.publish('event/testje/python/Test', payload=msg)
+        if self.on_connect_callback is not None:
+            self.on_connect_callback(client, rc)
 
     def on_message(self, client: mqtt.Client, userdata, msg: mqtt.MQTTMessage):
-        arr_topic = msg.topic.split('/')
-        print(f"Received: {msg.topic}")
-
-        message_type_name = arr_topic[-1]
-        actor_id = arr_topic[-2]
-
-        #TODO: fix this!
-        test_msg = test.Test()
-        test_msg.ParseFromString(msg.payload)
-
-        handler = self.mqtt_registry.get_handler()
-
-        if handler is not None:
-            handler.on_message_receive(msg.topic, test_msg)
+        if self.on_message_callback is not None:
+            self.on_message_callback(msg)
 
     def on_disconnect(self, client: mqtt.Client, userdata, rc: int):
-        print(f'Disconnected (Result: {rc})')
+        #TODO: add reconnect logic here
+
+        if self.on_disconnect_callback is not None:
+            self.on_disconnect_callback()
 
     def publish(self, action: MqttAction, target: str, actor_id: str, message_type: str, payload: bytes):
         """Publishes a message to a specific MQTT topic."""
@@ -91,9 +66,6 @@ class MqttService:
                     qos=1, #qos=1 --> AtLeastOnce
                     retain=True
                 )
-
-                # Wait for the message to be published
-                result.wait_for_publish()
                 
                 if result.rc != mqtt.MQTT_ERR_SUCCESS:
                     self.logger.error(f"Failed to publish message to {topic}")
