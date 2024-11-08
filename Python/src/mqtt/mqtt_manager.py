@@ -15,11 +15,11 @@ class MqttManager():
         # Load settings from environment
         mqtt_settings = MqttSettings.from_env()
 
-        # Create a registry to store handlers and message parsers
-        self.mqtt_registry = MqttRegistry()
-
         # Instantiate the MqttService with settings
         self.mqtt_service = MqttService(mqtt_settings)
+
+        # Create a registry to store handlers and message parsers
+        self.mqtt_registry = MqttRegistry(self.mqtt_service)
 
         # Set the callbacks for the mqtt service
         self.mqtt_service.on_connect_callback = self.on_connect
@@ -42,21 +42,7 @@ class MqttManager():
         else:
             print(f"Failed to connect, return code {rc}")
 
-        #TODO: add initial subscriptions here
-
-        #TODO: remove following!
-        client.subscribe('event/testje/#')
-
-        test_msg = test.Test()
-        test_msg.msg = 'Hello, World!'
-
-        specific_datetime = datetime(2024, 11, 6, 12, 0, 0)
-        test_msg.timestamp = specific_datetime
-
-        msg = test_msg.SerializeToString()
-
-        # Examples of publishing messages to different types of subscriptions
-        client.publish('event/testje/python/Test', payload=msg)
+        self.mqtt_service.subscribe(self.mqtt_registry.get_all_subscriptions())
 
     def on_disconnect(self):
         print("Disconnected from MQTT Broker!")
@@ -68,11 +54,18 @@ class MqttManager():
         message_type_name = arr_topic[-1]
         actor_id = arr_topic[-2]
 
-        #TODO: fix this!
-        test_msg = test.Test()
-        test_msg.ParseFromString(message.payload)
+        # Try to get the parser based on the message type name
+        parser = self.mqtt_registry.try_get_parser(message_type_name)
+        if parser is not None:
+            # Instantiate the parser dynamically
+            parsed_message = parser()
 
-        handler = self.mqtt_registry.get_handler(self.mqtt_service)
+            # Parse the payload using the parser
+            parsed_message.ParseFromString(message.payload)
 
-        if handler is not None:
-            handler.on_message_receive(message.topic, test_msg)
+            # Try to get handlers based on the topic
+            handlers = self.mqtt_registry.try_get_handlers(message.topic)
+
+            if handlers:
+                for handler in handlers:
+                    handler.on_message_receive(message.topic, parsed_message)

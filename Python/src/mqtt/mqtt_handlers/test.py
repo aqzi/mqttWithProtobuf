@@ -1,7 +1,6 @@
 from typing import List
 from mqtt.mqtt_handlers.mqtt_handler import MqttHandler
-from mqtt.mqtt_protocol import MqttAction
-from mqtt.mqtt_service import MqttService
+from mqtt.mqtt_service import MqttAction, MqttService
 import protobuf.Test_pb2 as test
 
 

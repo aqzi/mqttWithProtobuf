@@ -26,10 +26,10 @@ public class TestHandler(IMqttService mqttService) : IMqttHandler
                 Proto.Test msg = new()
                 {
                     Timestamp = test.Timestamp,
-                    Msg = $"Echo through worker => {test.Msg}",
+                    Msg = $"Echo through dotnet => {test.Msg}",
                 };
                 
-                mqttService.Publish(MqttAction.EVENT, "testWorker", "worker", "Test", msg.ToByteArray());
+                mqttService.Publish(MqttAction.EVENT, "testDotnet", "dotnet", "Test", msg.ToByteArray());
 
                 break;
             default:

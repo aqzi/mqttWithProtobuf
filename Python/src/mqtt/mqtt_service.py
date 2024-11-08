@@ -1,11 +1,13 @@
-import asyncio
-from datetime import datetime
+from enum import Enum
 import logging
 from typing import Any, Callable, List
 import paho.mqtt.client as mqtt
-import protobuf.Test_pb2 as test
-from mqtt.mqtt_protocol import MqttAction
 from mqtt.mqtt_settings import MqttSettings
+
+class MqttAction(Enum):
+    STATE = "STATE"
+    COMMAND = "COMMAND"
+    EVENT = "EVENT"
 
 class MqttService:
     def __init__(self, mqtt_settings: MqttSettings):
