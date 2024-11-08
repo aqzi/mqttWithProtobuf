@@ -9,18 +9,21 @@ const Settings = () => {
                     <h3 className='mt-5 text-2xl'>.Net:</h3>
                     <ul>
                         <li>- MsgClass: Test, SubscribeTopic: event/test/#, PublishTopic: event/testDotnet/dotnet/Test</li>
+                        <li>- MsgClass: User, SubscribeTopic: event/test/#, PublishTopic: event/testDotnet/dotnet/User</li>
                     </ul>
                 </div>
                 <div className='flex flex-col'>
                     <h3 className='mt-5 text-2xl'>Python:</h3>
                     <ul>
                         <li>- MsgClass: Test, SubscribeTopic: event/test/#, PublishTopic: event/testPython/python/Test</li>
+                        <li>- MsgClass: User, SubscribeTopic: event/test/#, PublishTopic: event/testPython/python/User</li>
                     </ul>
                 </div>
                 <div className='flex flex-col'>
                     <h3 className='mt-5 text-2xl'>NodeJs:</h3>
                     <ul>
                         <li>- MsgClass: Test, SubscribeTopic: [event/testDotnet/#, event/testPython/#], PublishTopic: event/test/frontend/Test</li>
+                        <li>- MsgClass: User, SubscribeTopic: [event/testDotnet/#, event/testPython/#], PublishTopic: event/test/frontend/User</li>
                     </ul>
                 </div>
             </div>

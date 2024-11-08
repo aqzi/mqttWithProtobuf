@@ -9,3 +9,9 @@ message Test {
     google.protobuf.Timestamp timestamp = 1;
     string msg = 2;
 }
+
+message User {
+    google.protobuf.Timestamp timestamp = 1;
+    string name = 2;
+    int32 age = 3;
+}
