@@ -1,35 +1,36 @@
 import { Test, User } from "../protobuf/Test";
 import useSubscription from "../mqtt/UseSubscription";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { MqttMessage } from "../mqtt/mqttProtocol";
 
 const SubscribeMsg = () => {
     const [messages, setMessages] = useState<MqttMessage<Test|User>[]>([]);
 
     const counter = useRef(0);
-    
-    const {message} = useSubscription([
-        'event/testPython/#',
-        'event/testDotnet/#'
-    ]);
 
-    useEffect(() => {
-        if (message) {
-            let tmp: MqttMessage<Test|User>;
-            
-            if (message.msgClass === 'Test') {
-                tmp = message as MqttMessage<Test>;
-            } else {
-                tmp = message as MqttMessage<User>;
-            }
-
-            
-            // Add the new message to the list of messages and make sure the list is not longer than 5 messages
-            setMessages(prev => [tmp, ...prev].slice(0, 6));
-
-            counter.current++;
+    const handleReceive = (message: MqttMessage<any>) => {
+        let tmp: MqttMessage<Test|User>;
+        
+        if (message.msgClass === 'Test') {
+            tmp = message as MqttMessage<Test>;
+        } else {
+            tmp = message as MqttMessage<User>;
         }
-    }, [message]);
+
+        
+        // Add the new message to the list of messages and make sure the list is not longer than 5 messages
+        setMessages(prev => [tmp, ...prev].slice(0, 6));
+
+        counter.current++;
+    };
+
+    useSubscription(
+        [
+            'event/testPython/#',
+            'event/testDotnet/#'
+        ],
+        handleReceive
+    )
 
     const PayloadInfo: React.FC<{msg: MqttMessage<Test|User>}> = ({msg}) => {
         if (msg.msgClass === 'Test') {

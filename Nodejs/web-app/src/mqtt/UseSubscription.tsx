@@ -16,11 +16,10 @@ interface IUseSubscription {
 
 export default function useSubscription(
     topic: string | string[],
+    onReceive: (message: MqttMessage<any>) => void,
     options: IClientSubscribeOptions = {} as IClientSubscribeOptions,
 ): IUseSubscription {
     const { client, isConnected } = useMqttClient()
-
-    const [message, setMessage] = useState<MqttMessage<any>|undefined>();
 
     const subscribe = useCallback(async (topic: string|string[]) => {
         client?.subscribe(topic, options);
@@ -36,7 +35,7 @@ export default function useSubscription(
                 const target = segmentedTopic.slice(1, -2);
 
                 if ([topic].flat().some(rTopic => matches(rTopic, receivedTopic))) {
-                    setMessage({
+                    onReceive({
                         topicPrefix: {
                             action: segmentedTopic[0] as MqttActions,
                             target: target.join('/'),
@@ -66,7 +65,6 @@ export default function useSubscription(
 
     return {
         topic,
-        message,
         isConnected,
     };
 }
