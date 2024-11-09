@@ -1,6 +1,5 @@
 using System.Collections.Concurrent;
 using System.Reflection;
-using Dotnet.Mqtt.Utils;
 using Google.Protobuf;
 
 namespace Dotnet.Mqtt;
@@ -16,7 +15,7 @@ public class MqttRegistry : IMqttRegistry
 {
     private readonly ConcurrentDictionary<string, MessageParser> parsers = new(); //key: namespace.msgType
     //remark: a dict is a temporarly solution. A search tree would be a better choice for high performance!
-    private readonly TreeNode handlers = new("root");
+    private readonly MqttTreeStructure handlers = new("root");
     
     public MqttRegistry(Assembly? assembly, IMqttService mqttservice)
     {

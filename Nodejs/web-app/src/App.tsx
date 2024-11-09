@@ -6,14 +6,14 @@ import { IClientOptions } from 'mqtt/*';
 
 const App = () => {
 	const opts: IClientOptions = {
-			clientId: "frontend",
-			username: "frontend",
-			password: "password",
-			reconnectPeriod: 1000,
-			keepalive: 5,
-			rejectUnauthorized: false,
-			protocolVersion: 5,
-			port: 8080,
+			clientId: process.env.REACT_APP_MQTT_CLIENT_ID,
+			username: process.env.REACT_APP_MQTT_USER,
+			password: process.env.REACT_APP_MQTT_PASSWORD,
+			reconnectPeriod: parseInt(process.env.REACT_APP_MQTT_RECONNECT_PERIOD!, 10),
+			keepalive: parseInt(process.env.REACT_APP_MQTT_KEEP_ALIVE!, 10),
+			rejectUnauthorized: Boolean(process.env.REACT_APP_MQTT_IS_TLS_ENABLED),
+			protocolVersion: parseInt(process.env.REACT_APP_MQTT_PROTOCOL_VERSION!, 10) as 3 | 4 | 5,
+			port: parseInt(process.env.REACT_APP_MQTT_PORT!, 10),
 		};
 	
 	return (

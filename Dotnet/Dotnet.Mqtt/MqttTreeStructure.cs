@@ -1,26 +1,26 @@
 using System.Collections;
 
-namespace Dotnet.Mqtt.Utils;
+namespace Dotnet.Mqtt;
 
-public class TreeNode(string topic) : IEnumerable<TreeNode>
+public class MqttTreeStructure(string topic) : IEnumerable<MqttTreeStructure>
 {
-    private readonly Dictionary<string, TreeNode> children = [];
+    private readonly Dictionary<string, MqttTreeStructure> children = [];
 
     public readonly string Topic = topic;
     public List<IMqttHandler> Handlers = [];
-    public TreeNode? Parent { get; set; }
+    public MqttTreeStructure? Parent { get; set; }
 
-    public TreeNode GetChild(string topic)
+    public MqttTreeStructure GetChild(string topic)
     {
         return children[topic];
     }
 
-    public List<TreeNode> GetChildren()
+    public List<MqttTreeStructure> GetChildren()
     {
         return [.. children.Values];
     }
 
-    public IEnumerator<TreeNode> GetEnumerator()
+    public IEnumerator<MqttTreeStructure> GetEnumerator()
     {
         return children.Values.GetEnumerator();
     }
@@ -50,7 +50,7 @@ public class TreeNode(string topic) : IEnumerable<TreeNode>
         return Handlers;
     }
 
-    public TreeNode GetRoot()
+    public MqttTreeStructure GetRoot()
     {
         var root = this;
         var isRoot = false;
@@ -71,7 +71,7 @@ public class TreeNode(string topic) : IEnumerable<TreeNode>
     }
 
     //Return the tree node according to the topic. There is always 0 or 1 path.
-    public TreeNode? GetTreeNode(string topic)
+    public MqttTreeStructure? GetTreeNode(string topic)
     {
         var root = GetRoot();
 
@@ -120,7 +120,7 @@ public class TreeNode(string topic) : IEnumerable<TreeNode>
             }
             else
             {
-                var newNode = new TreeNode(t)
+                var newNode = new MqttTreeStructure(t)
                 {
                     Parent = current
                 };
@@ -139,7 +139,7 @@ public class TreeNode(string topic) : IEnumerable<TreeNode>
     //Return all handlers that are subscribed to the topic
     public List<IMqttHandler>? GetMqttHandlers(string topic)
     {
-        TreeNode root = GetRoot();
+        MqttTreeStructure root = GetRoot();
 
         var topics = topic.Split('/');
 
@@ -149,11 +149,11 @@ public class TreeNode(string topic) : IEnumerable<TreeNode>
         }
 
         List<IMqttHandler> handlers = [];
-        List<TreeNode> current = [root];
+        List<MqttTreeStructure> current = [root];
 
         foreach (var t in topics)
         {
-            List<TreeNode> next = [];
+            List<MqttTreeStructure> next = [];
 
             foreach (var c in current)
             {
@@ -183,7 +183,7 @@ public class TreeNode(string topic) : IEnumerable<TreeNode>
         return handlers;
     }
 
-    public List<string> GetAllSubscriptions(TreeNode? node)
+    public List<string> GetAllSubscriptions(MqttTreeStructure? node)
     {
         List<string> subscriptions = new();
 

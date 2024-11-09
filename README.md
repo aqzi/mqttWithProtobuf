@@ -28,4 +28,5 @@ You can debug each project. The settings are located in the .vscode directory. M
 - make the mqtt service in all projects async
 - make a docker file for each project
 - create an sh file to start all projects at once
+- make the env variables in each project more consistent
 - bug fix: nodejs app sometimes disconnects with the mqtt broker at start (temporary fix: refresh the page until it works)
