@@ -19,6 +19,14 @@
             "request": "launch",
             "url": "http://localhost:3000",
             "webRoot": "${workspaceFolder}/Nodejs/web-app",
+        },
+        {
+            "name": "Python Debugger: Current File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/Python/src/main.py",
+            "console": "integratedTerminal",
+            "python": "${workspaceFolder}/Python/.venv/bin/python" //adapt this to your virtual environment
         }
     ]
 }
