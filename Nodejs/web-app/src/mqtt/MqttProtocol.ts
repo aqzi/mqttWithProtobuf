@@ -7,12 +7,20 @@ export enum ConnectionState {
 	Reconnecting = 3
 }
 
+export type MqttNamespace = keyof typeof Components;
+
 export type MqttActions = 'state' | 'command' | 'event';
 export type MqttTopicPrefixType = { action: MqttActions, target: string };
+export type MqttMsgClass = {
+	[N in MqttNamespace]: {
+		namespace: N;
+		msgType: Exclude<keyof typeof Components[N], "protobufPackage">;
+	};
+}[MqttNamespace];
 
 export type MqttMessage<T> = {
 	topicPrefix: MqttTopicPrefixType,
 	actorId: string,
-	msgClass: keyof typeof Components,
+	msgClass: MqttMsgClass,
 	payload: T
 }

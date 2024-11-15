@@ -6,6 +6,7 @@ import { useMqttClient } from './MqttContext';
 import { matches } from './mqttTopicVerifier';
 import { Components } from '../protobuf';
 import { MqttActions, MqttMessage } from './mqttProtocol';
+import { Test } from '../protobuf/Test';
 
 interface IUseSubscription {
     topic: string | string[];
@@ -31,8 +32,11 @@ export default function useSubscription(
         if (segmentedTopic.length > 3) {
             try {
                 const actorId = segmentedTopic[segmentedTopic.length - 2];
-                const msgClass = segmentedTopic[segmentedTopic.length - 1] as keyof typeof Components;
                 const target = segmentedTopic.slice(1, -2);
+
+                const segmentedMsgClass = segmentedTopic[segmentedTopic.length - 1].split('.');
+                const msgNamespace = segmentedMsgClass[0] as keyof typeof Components;
+                const msgType = segmentedMsgClass[1] as Exclude<keyof typeof Components[keyof typeof Components], "protobufPackage">;
 
                 if ([topic].flat().some(rTopic => matches(rTopic, receivedTopic))) {
                     onReceive({
@@ -41,8 +45,8 @@ export default function useSubscription(
                             target: target.join('/'),
                         },
                         actorId: actorId,
-                        msgClass: msgClass,
-                        payload: Components[msgClass].decode(receivedMessage),
+                        msgClass: {namespace: msgNamespace, msgType: msgType},
+                        payload: Components[msgNamespace][msgType].decode(receivedMessage),
                     });
                 }
             } catch (error) {

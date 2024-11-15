@@ -30,6 +30,7 @@ class TestHandler(MqttHandler):
                     action=MqttAction.EVENT,
                     target="testPython",
                     actor_id="python",
+                    message_namespace="Test",
                     message_type="Test",
                     payload=msg.SerializeToString()
                 )
@@ -46,6 +47,7 @@ class TestHandler(MqttHandler):
                     action=MqttAction.EVENT,
                     target="testPython",
                     actor_id="python",
+                    message_namespace="Test",
                     message_type="User",
                     payload=msg.SerializeToString()
                 )

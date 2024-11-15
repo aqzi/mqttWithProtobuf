@@ -42,13 +42,13 @@ const MqttProvider: React.FC<{ brokerUrl: string, opts: IClientOptions, children
 
     function publish <T>(msg: MqttMessage<T>, opts?: IClientPublishOptions) {
 		if (client && isConnected) {
-            const encoding = Components[msg.msgClass].encode(msg.payload as any).finish();
+            const encoding = Components[msg.msgClass.namespace][msg.msgClass.msgType].encode(msg.payload as any).finish();
 			const buffer = Buffer.from(encoding);
 
 			let action = msg.topicPrefix.action;
 
 			client.publish(
-				`${action}/${msg.topicPrefix.target}/${msg.actorId}/${msg.msgClass.toString()}`, 
+				`${action}/${msg.topicPrefix.target}/${msg.actorId}/${msg.msgClass.namespace.toString()}.${msg.msgClass.msgType.toString()}`, 
 				buffer, opts ?? {qos: 0, retain: action === 'state'}
 			);
 		} else {

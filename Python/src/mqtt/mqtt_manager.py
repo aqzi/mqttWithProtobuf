@@ -51,11 +51,15 @@ class MqttManager():
         arr_topic = message.topic.split('/')
         print(f"Received: {message.topic}")
 
-        message_type_name = arr_topic[-1]
+        message_class = arr_topic[-1]
         actor_id = arr_topic[-2]
 
+        segmented_msg_class = message_class.split('.')
+        msg_namespace = segmented_msg_class[0]
+        message_type = segmented_msg_class[1]
+
         # Try to get the parser based on the message type name
-        parser = self.mqtt_registry.try_get_parser(message_type_name)
+        parser = self.mqtt_registry.try_get_parser(message_class)
         if parser is not None:
             # Instantiate the parser dynamically
             parsed_message = parser()

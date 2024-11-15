@@ -3,7 +3,7 @@ package test;
 
 import "google/protobuf/timestamp.proto";
 
-option csharp_namespace = "Dotnet.Protobuf";
+option csharp_namespace = "Dotnet.Protobuf.Test";
 
 message Test {
     google.protobuf.Timestamp timestamp = 1;

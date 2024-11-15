@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Test, User } from "../protobuf/Test";
 import { useMqttClient } from "../mqtt/MqttContext";
-import { MqttActions } from "../mqtt/mqttProtocol";
+import { MqttActions, MqttMsgClass } from "../mqtt/mqttProtocol";
 import { Components } from "../protobuf";
 
-const PUBLISH_TOPIC_TEST_MSG = 'event/test/frontend/Test';
-const PUBLISH_TOPIC_USER_MSG = 'event/test/frontend/User';
+const PUBLISH_TOPIC_TEST_MSG = 'event/test/frontend/Test.Test';
+const PUBLISH_TOPIC_USER_MSG = 'event/test/frontend/Test.User';
 
 const PublishMsg = () => {
     const { publish } = useMqttClient();
@@ -21,7 +21,12 @@ const PublishMsg = () => {
         const action = topicSegments[0] as MqttActions;
         const target = topicSegments.slice(1, -2).join('/');
         const actorId = topicSegments[topicSegments.length - 2];
-        const msgClass = topicSegments[topicSegments.length - 1] as keyof typeof Components;
+
+        const tmp = topicSegments[topicSegments.length - 1].split('.');
+        const msgClass = {
+            namespace: tmp[0],
+            msgType: tmp[1]
+        } as MqttMsgClass;
 
         publish({topicPrefix: {action, target}, actorId, msgClass, payload: testMsg});
     };
@@ -34,7 +39,12 @@ const PublishMsg = () => {
         const action = topicSegments[0] as MqttActions;
         const target = topicSegments.slice(1, -2).join('/');
         const actorId = topicSegments[topicSegments.length - 2];
-        const msgClass = topicSegments[topicSegments.length - 1] as keyof typeof Components;
+
+        const tmp = topicSegments[topicSegments.length - 1].split('.');
+        const msgClass = {
+            namespace: tmp[0],
+            msgType: tmp[1]
+        } as MqttMsgClass;
 
         publish({topicPrefix: {action, target}, actorId, msgClass, payload: userMsg});
     }

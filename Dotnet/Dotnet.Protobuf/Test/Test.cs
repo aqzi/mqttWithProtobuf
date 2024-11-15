@@ -9,7 +9,7 @@ using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
-namespace Dotnet.Protobuf {
+namespace Dotnet.Protobuf.Test {
 
   /// <summary>Holder for reflection information generated from Test.proto</summary>
   public static partial class TestReflection {
@@ -28,13 +28,13 @@ namespace Dotnet.Protobuf {
             "LnByb3RvIkIKBFRlc3QSLQoJdGltZXN0YW1wGAEgASgLMhouZ29vZ2xlLnBy",
             "b3RvYnVmLlRpbWVzdGFtcBILCgNtc2cYAiABKAkiUAoEVXNlchItCgl0aW1l",
             "c3RhbXAYASABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEgwKBG5h",
-            "bWUYAiABKAkSCwoDYWdlGAMgASgFQhKqAg9Eb3RuZXQuUHJvdG9idWZiBnBy",
-            "b3RvMw=="));
+            "bWUYAiABKAkSCwoDYWdlGAMgASgFQheqAhREb3RuZXQuUHJvdG9idWYuVGVz",
+            "dGIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Dotnet.Protobuf.Test), global::Dotnet.Protobuf.Test.Parser, new[]{ "Timestamp", "Msg" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Dotnet.Protobuf.User), global::Dotnet.Protobuf.User.Parser, new[]{ "Timestamp", "Name", "Age" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Dotnet.Protobuf.Test.Test), global::Dotnet.Protobuf.Test.Test.Parser, new[]{ "Timestamp", "Msg" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Dotnet.Protobuf.Test.User), global::Dotnet.Protobuf.Test.User.Parser, new[]{ "Timestamp", "Name", "Age" }, null, null, null, null)
           }));
     }
     #endregion
@@ -56,7 +56,7 @@ namespace Dotnet.Protobuf {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Dotnet.Protobuf.TestReflection.Descriptor.MessageTypes[0]; }
+      get { return global::Dotnet.Protobuf.Test.TestReflection.Descriptor.MessageTypes[0]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -292,7 +292,7 @@ namespace Dotnet.Protobuf {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Dotnet.Protobuf.TestReflection.Descriptor.MessageTypes[1]; }
+      get { return global::Dotnet.Protobuf.Test.TestReflection.Descriptor.MessageTypes[1]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

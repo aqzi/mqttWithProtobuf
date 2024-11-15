@@ -17,17 +17,6 @@ from mqtt.mqtt_tree_structure import MqttTreeStructure
 # Import protobuf and mqtt_handlers package
 import protobuf
 import mqtt.mqtt_handlers
-
-# class MqttRegistry():
-#     def __init__(self):
-#         self.handlers = {}
-#         self.parsers = {}
-
-#     def get_handler(self, mqtt_service: MqttService) -> MqttHandler:
-#         return TestHandler(mqtt_service)
-    
-#     def get_all_subscriptions(self):
-#         return self.handlers.get_all_subscriptions(None)
     
 
 class MqttRegistry():
@@ -54,8 +43,10 @@ class MqttRegistry():
                 
                 # Check if the attribute is a protobuf message class
                 if isinstance(attr, type) and issubclass(attr, Message):
+                    msg_namespace = attr.DESCRIPTOR.full_name.split('.')[0].capitalize() #get namespace
+
                     # Store the message class in a dictionary for instantiation later
-                    self.parsers[attr_name] = attr
+                    self.parsers[msg_namespace + "." + attr_name] = attr
 
     def cache_handlers(self):
         # Loop through all modules in mqtt_handlers directory

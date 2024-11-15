@@ -21,7 +21,7 @@ public interface IMqttService
     Task StartAsync(CancellationToken stoppingToken);
     Task StopAsync();
 
-    Task Publish(MqttAction action, string target, string actorId, string messageType, byte[] bytes);
+    Task Publish(MqttAction action, string target, string actorId, string messageNamespace, string messageType, byte[] bytes);
 
     void Subscribe(List<string> topics);
 }
@@ -123,26 +123,26 @@ public class MqttService : IMqttService
         await mqttClient.DisconnectAsync();
     }
 
-    public async Task Publish(MqttAction action, string target, string actorId, string messageType, byte[] bytes)
+    public async Task Publish(MqttAction action, string target, string actorId, string messageNamespace, string messageType, byte[] bytes)
     {
         if (mqttClient != null && mqttClient.IsConnected)
         {
             try
             {
                 var msg = new MqttApplicationMessageBuilder()
-                    .WithTopic($"{action.ToString().ToLower()}/{target}/{actorId}/{messageType}")
+                    .WithTopic($"{action.ToString().ToLower()}/{target}/{actorId}/{messageNamespace}.{messageType}")
                     .WithPayload(bytes)
                     .WithQualityOfServiceLevel(MQTTnet.Protocol.MqttQualityOfServiceLevel.AtLeastOnce)
                     .WithRetainFlag()
                     .Build();
 
-                Console.WriteLine($"Sending:... {action}/{target}/{actorId}/{messageType}");
+                Console.WriteLine($"Sending:... {action}/{target}/{actorId}/{messageNamespace}.{messageType}");
 
                 await mqttClient.PublishAsync(msg);
             }
             catch (Exception e)
             {
-                this.logger.LogError($"Mqtt Send {action.ToString().ToLower()}/{target}/{actorId}/{messageType} failed: {e.Message}");
+                this.logger.LogError($"Mqtt Send {action.ToString().ToLower()}/{target}/{actorId}/{messageNamespace}.{messageType} failed: {e.Message}");
             }
         }
     }

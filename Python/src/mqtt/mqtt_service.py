@@ -55,11 +55,11 @@ class MqttService:
         if self.on_disconnect_callback is not None:
             self.on_disconnect_callback()
 
-    def publish(self, action: MqttAction, target: str, actor_id: str, message_type: str, payload: bytes):
+    def publish(self, action: MqttAction, target: str, actor_id: str, message_namespace: str, message_type: str, payload: bytes):
         """Publishes a message to a specific MQTT topic."""
         if self.client.is_connected():
             try:
-                topic = f"{action.value.lower()}/{target}/{actor_id}/{message_type}"
+                topic = f"{action.value.lower()}/{target}/{actor_id}/{message_namespace}.{message_type}"
 
                 # Publish the message
                 result = self.client.publish(

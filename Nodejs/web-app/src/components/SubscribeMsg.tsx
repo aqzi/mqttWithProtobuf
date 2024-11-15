@@ -11,7 +11,7 @@ const SubscribeMsg = () => {
     const handleReceive = (message: MqttMessage<any>) => {
         let tmp: MqttMessage<Test|User>;
         
-        if (message.msgClass === 'Test') {
+        if (message.msgClass.msgType === 'Test') {
             tmp = message as MqttMessage<Test>;
         } else {
             tmp = message as MqttMessage<User>;
@@ -33,7 +33,7 @@ const SubscribeMsg = () => {
     )
 
     const PayloadInfo: React.FC<{msg: MqttMessage<Test|User>}> = ({msg}) => {
-        if (msg.msgClass === 'Test') {
+        if (msg.msgClass.msgType === 'Test') {
             const tmp = msg.payload as Test;
 
             return (
@@ -61,7 +61,8 @@ const SubscribeMsg = () => {
                             <li>Action: {msg.topicPrefix.action}</li>
                             <li>Actor: {msg.actorId}</li>
                             <li>Target: {msg.topicPrefix.target}</li>
-                            <li>MsgClass: {msg.msgClass}</li>
+                            {/* <li>MsgNamespace: {msg.msgClass.namespace}</li>
+                            <li>MsgType: {msg.msgClass.msgType}</li> */}
                             <PayloadInfo msg={msg}/>
                             <li>Timestamp: {msg.payload.timestamp?.toLocaleDateString()}, {msg.payload.timestamp?.toLocaleTimeString()}</li>
                             <li className="font-bold">Seq nr: {counter.current - idx} {idx === 0 ? ' --> [most recent]' : ''}</li>

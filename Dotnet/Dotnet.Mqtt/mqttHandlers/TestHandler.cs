@@ -1,5 +1,5 @@
 using Google.Protobuf;
-using Proto = Dotnet.Protobuf;
+using Proto = Dotnet.Protobuf.Test;
 
 namespace Dotnet.Mqtt.MqttHandlers;
 
@@ -29,7 +29,7 @@ public class TestHandler(IMqttService mqttService) : IMqttHandler
                     Msg = $"Echo through dotnet => {test.Msg}",
                 };
                 
-                mqttService.Publish(MqttAction.EVENT, "testDotnet", "dotnet", "Test", testMsg.ToByteArray());
+                mqttService.Publish(MqttAction.EVENT, "testDotnet", "dotnet", "Test", "Test", testMsg.ToByteArray());
 
                 break;
             case Proto.User user:
@@ -40,7 +40,7 @@ public class TestHandler(IMqttService mqttService) : IMqttHandler
                     Age = user.Age,
                 };
                 
-                mqttService.Publish(MqttAction.EVENT, "testDotnet", "dotnet", "User", userMsg.ToByteArray());
+                mqttService.Publish(MqttAction.EVENT, "testDotnet", "dotnet", "Test", "User", userMsg.ToByteArray());
 
                 break;
             default:
