@@ -5,16 +5,7 @@ This project demonstrates how a dotnet, python and nodejs app can communicate wi
 
 ## 🔥 Quickstart
 1. Start mqtt broker using the docker compose.
-2. Execute the sh file in `devops/scripts` to generate the protobuf files in each of the 3 applications. Be aware that you also have to create an index.ts file inside `Nodejs/web-app/src/protobuf`! This can be done as follow:
-```typescript
-import { Test, User } from './Test'; //extend when adding more messages inside the Test.proto file
-//add additional imports when creating new proto files
-
-export const Components = {
-	Test,
-	User
-};
-```
+2. Execute the sh file in `devops/scripts` to generate the protobuf files in each of the 3 applications.
 3. Go to Python project, create virtual env, install the packages with `pip install -r requirements` and run the code with `python Python/src/main.py`.
 4. Go to Dotnet project and run app with command `dotnet run`
 5. Go to Nodejs project, install packages with `npm install` and run the code with `npm start`.
