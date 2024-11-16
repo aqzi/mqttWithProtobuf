@@ -36,9 +36,10 @@ When a message is received, its payload is in raw byte format and needs to be co
 Once the message is parsed, it is passed to the appropriate handlers for further processing. A handler can only process a message if it has subscribed to the relevant topic. Handlers leverage pattern matching to ensure they can process messages of the correct type.
 
 ## ✅ TODO
-- update the proto_generate.sh file such that it generates the index.ts file inside Nodejs/web-app/src/protobuf
 - make the mqtt service in all projects async
 - make a docker file for each project
 - create an sh file to start all projects at once
 - make the env variables in each project more consistent
+- improve typesafety inside the Nodejs project
+- create protobuf directory automaticly in all the projects in case it doesn't exist
 - bug fix: nodejs app sometimes disconnects with the mqtt broker at start (temporary fix: refresh the page until it works)

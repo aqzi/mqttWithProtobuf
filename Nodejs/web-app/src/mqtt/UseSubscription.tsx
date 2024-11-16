@@ -46,7 +46,7 @@ export default function useSubscription(
                         },
                         actorId: actorId,
                         msgClass: {namespace: msgNamespace, msgType: msgType},
-                        payload: Components[msgNamespace][msgType].decode(receivedMessage),
+                        payload: (Components[msgNamespace][msgType] as any).decode(receivedMessage),
                     });
                 }
             } catch (error) {
