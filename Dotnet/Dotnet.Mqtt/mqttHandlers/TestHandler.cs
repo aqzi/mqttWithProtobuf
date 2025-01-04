@@ -43,6 +43,17 @@ public class TestHandler(IMqttService mqttService) : IMqttHandler
                 mqttService.Publish(MqttAction.EVENT, "testDotnet", "dotnet", "Test", "User", userMsg.ToByteArray());
 
                 break;
+            case Proto.TestWithAnimal animal:
+                Proto.TestWithAnimal animalMsg = new()
+                {
+                    Timestamp = animal.Timestamp,
+                    IsResponse = true,
+                    Animal = animal.Animal,
+                };
+                
+                mqttService.Publish(MqttAction.EVENT, "testDotnet", "dotnet", "Test", "TestWithAnimal", animalMsg.ToByteArray());
+
+                break;
             default:
                 Console.WriteLine("Unknown message received");
                 break;

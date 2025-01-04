@@ -26,6 +26,19 @@ When a message is received, its payload is in raw byte format and needs to be co
 ### Handlers
 Once the message is parsed, it is passed to the appropriate handlers for further processing. A handler can only process a message if it has subscribed to the relevant topic. Handlers leverage pattern matching to ensure they can process messages of the correct type.
 
+## 🚩 Known issues:
+1. Node.js App Disconnects from MQTT Broker at Startup
+    - **Problem**: The Node.js application occasionally disconnects from the MQTT broker when it starts.
+    - **Temporary Fix**: Refresh the page until the connection stabilizes. (I belief this problem is related to how react renders pages in dev mode)
+2. `ModuleNotFoundError` in Python When Importing Protobuf Messages
+    - **Problem**: A `ModuleNotFoundError` occurs when importing a message from one `.proto` file into another in Python.
+    - **Solution**: Create an `__init__.py` file in the `Python/src/protobuf` directory with the following content:
+        ```python
+        import os
+        import sys
+        sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
+        ```
+
 ## ✅ TODO
 - make the mqtt service in all projects async
 - make a docker file for each project
@@ -33,4 +46,3 @@ Once the message is parsed, it is passed to the appropriate handlers for further
 - make the env variables in each project more consistent
 - improve typesafety inside the Nodejs project
 - create protobuf directory automaticly in all the projects in case it doesn't exist
-- bug fix: nodejs app sometimes disconnects with the mqtt broker at start (temporary fix: refresh the page until it works)

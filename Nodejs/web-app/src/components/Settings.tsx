@@ -10,6 +10,7 @@ const Settings = () => {
                     <ul>
                         <li>- SubscribeTopic: event/test/#, PublishTopic: event/testDotnet/dotnet/Test.Test</li>
                         <li>- SubscribeTopic: event/test/#, PublishTopic: event/testDotnet/dotnet/Test.User</li>
+                        <li>- SubscribeTopic: event/test/#, PublishTopic: event/testDotnet/dotnet/Test.TestWithAnimal</li>
                     </ul>
                 </div>
                 <div className='flex flex-col'>
@@ -17,6 +18,7 @@ const Settings = () => {
                     <ul>
                         <li>- SubscribeTopic: event/test/#, PublishTopic: event/testPython/python/Test.Test</li>
                         <li>- SubscribeTopic: event/test/#, PublishTopic: event/testPython/python/Test.User</li>
+                        <li>- SubscribeTopic: event/test/#, PublishTopic: event/testPython/python/Test.TestWithAnimal</li>
                     </ul>
                 </div>
                 <div className='flex flex-col'>
@@ -24,6 +26,7 @@ const Settings = () => {
                     <ul>
                         <li>- SubscribeTopic: [event/testDotnet/#, event/testPython/#], PublishTopic: event/test/frontend/Test.Test</li>
                         <li>- SubscribeTopic: [event/testDotnet/#, event/testPython/#], PublishTopic: event/test/frontend/Test.User</li>
+                        <li>- SubscribeTopic: [event/testDotnet/#, event/testPython/#], PublishTopic: event/test/frontend/Test.TestWithAnimal</li>
                     </ul>
                 </div>
             </div>

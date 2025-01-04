@@ -51,6 +51,23 @@ class TestHandler(MqttHandler):
                     message_type="User",
                     payload=msg.SerializeToString()
                 )
+            case test.TestWithAnimal():
+                # Create a new message with modified content
+                msg = test.TestWithAnimal(
+                    timestamp=message.timestamp,
+                    isResponse=True,
+                    animal=message.animal
+                )
+
+                # Publish the message to the MQTT service
+                self.mqtt_service.publish(
+                    action=MqttAction.EVENT,
+                    target="testPython",
+                    actor_id="python",
+                    message_namespace="Test",
+                    message_type="TestWithAnimal",
+                    payload=msg.SerializeToString()
+                )
                 
             case _:
                 print("Unknown message received")

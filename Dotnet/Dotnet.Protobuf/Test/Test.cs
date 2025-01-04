@@ -25,16 +25,20 @@ namespace Dotnet.Protobuf.Test {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "CgpUZXN0LnByb3RvEgR0ZXN0Gh9nb29nbGUvcHJvdG9idWYvdGltZXN0YW1w",
-            "LnByb3RvIkIKBFRlc3QSLQoJdGltZXN0YW1wGAEgASgLMhouZ29vZ2xlLnBy",
-            "b3RvYnVmLlRpbWVzdGFtcBILCgNtc2cYAiABKAkiUAoEVXNlchItCgl0aW1l",
-            "c3RhbXAYASABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEgwKBG5h",
-            "bWUYAiABKAkSCwoDYWdlGAMgASgFQheqAhREb3RuZXQuUHJvdG9idWYuVGVz",
-            "dGIGcHJvdG8z"));
+            "LnByb3RvGgxBbmltYWwucHJvdG8iQgoEVGVzdBItCgl0aW1lc3RhbXAYASAB",
+            "KAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEgsKA21zZxgCIAEoCSJQ",
+            "CgRVc2VyEi0KCXRpbWVzdGFtcBgBIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5U",
+            "aW1lc3RhbXASDAoEbmFtZRgCIAEoCRILCgNhZ2UYAyABKAUicwoOVGVzdFdp",
+            "dGhBbmltYWwSLQoJdGltZXN0YW1wGAEgASgLMhouZ29vZ2xlLnByb3RvYnVm",
+            "LlRpbWVzdGFtcBISCgppc1Jlc3BvbnNlGAIgASgIEh4KBmFuaW1hbBgDIAEo",
+            "CzIOLmFuaW1hbC5BbmltYWxCF6oCFERvdG5ldC5Qcm90b2J1Zi5UZXN0YgZw",
+            "cm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, },
+          new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, global::Dotnet.Protobuf.Animal.AnimalReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Dotnet.Protobuf.Test.Test), global::Dotnet.Protobuf.Test.Test.Parser, new[]{ "Timestamp", "Msg" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Dotnet.Protobuf.Test.User), global::Dotnet.Protobuf.Test.User.Parser, new[]{ "Timestamp", "Name", "Age" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Dotnet.Protobuf.Test.User), global::Dotnet.Protobuf.Test.User.Parser, new[]{ "Timestamp", "Name", "Age" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Dotnet.Protobuf.Test.TestWithAnimal), global::Dotnet.Protobuf.Test.TestWithAnimal.Parser, new[]{ "Timestamp", "IsResponse", "Animal" }, null, null, null, null)
           }));
     }
     #endregion
@@ -541,6 +545,288 @@ namespace Dotnet.Protobuf.Test {
           }
           case 24: {
             Age = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
+  public sealed partial class TestWithAnimal : pb::IMessage<TestWithAnimal>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<TestWithAnimal> _parser = new pb::MessageParser<TestWithAnimal>(() => new TestWithAnimal());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<TestWithAnimal> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Dotnet.Protobuf.Test.TestReflection.Descriptor.MessageTypes[2]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public TestWithAnimal() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public TestWithAnimal(TestWithAnimal other) : this() {
+      timestamp_ = other.timestamp_ != null ? other.timestamp_.Clone() : null;
+      isResponse_ = other.isResponse_;
+      animal_ = other.animal_ != null ? other.animal_.Clone() : null;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public TestWithAnimal Clone() {
+      return new TestWithAnimal(this);
+    }
+
+    /// <summary>Field number for the "timestamp" field.</summary>
+    public const int TimestampFieldNumber = 1;
+    private global::Google.Protobuf.WellKnownTypes.Timestamp timestamp_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Google.Protobuf.WellKnownTypes.Timestamp Timestamp {
+      get { return timestamp_; }
+      set {
+        timestamp_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "isResponse" field.</summary>
+    public const int IsResponseFieldNumber = 2;
+    private bool isResponse_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool IsResponse {
+      get { return isResponse_; }
+      set {
+        isResponse_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "animal" field.</summary>
+    public const int AnimalFieldNumber = 3;
+    private global::Dotnet.Protobuf.Animal.Animal animal_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Dotnet.Protobuf.Animal.Animal Animal {
+      get { return animal_; }
+      set {
+        animal_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as TestWithAnimal);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(TestWithAnimal other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (!object.Equals(Timestamp, other.Timestamp)) return false;
+      if (IsResponse != other.IsResponse) return false;
+      if (!object.Equals(Animal, other.Animal)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (timestamp_ != null) hash ^= Timestamp.GetHashCode();
+      if (IsResponse != false) hash ^= IsResponse.GetHashCode();
+      if (animal_ != null) hash ^= Animal.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (timestamp_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(Timestamp);
+      }
+      if (IsResponse != false) {
+        output.WriteRawTag(16);
+        output.WriteBool(IsResponse);
+      }
+      if (animal_ != null) {
+        output.WriteRawTag(26);
+        output.WriteMessage(Animal);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (timestamp_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(Timestamp);
+      }
+      if (IsResponse != false) {
+        output.WriteRawTag(16);
+        output.WriteBool(IsResponse);
+      }
+      if (animal_ != null) {
+        output.WriteRawTag(26);
+        output.WriteMessage(Animal);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (timestamp_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Timestamp);
+      }
+      if (IsResponse != false) {
+        size += 1 + 1;
+      }
+      if (animal_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Animal);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(TestWithAnimal other) {
+      if (other == null) {
+        return;
+      }
+      if (other.timestamp_ != null) {
+        if (timestamp_ == null) {
+          Timestamp = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+        }
+        Timestamp.MergeFrom(other.Timestamp);
+      }
+      if (other.IsResponse != false) {
+        IsResponse = other.IsResponse;
+      }
+      if (other.animal_ != null) {
+        if (animal_ == null) {
+          Animal = new global::Dotnet.Protobuf.Animal.Animal();
+        }
+        Animal.MergeFrom(other.Animal);
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            if (timestamp_ == null) {
+              Timestamp = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+            }
+            input.ReadMessage(Timestamp);
+            break;
+          }
+          case 16: {
+            IsResponse = input.ReadBool();
+            break;
+          }
+          case 26: {
+            if (animal_ == null) {
+              Animal = new global::Dotnet.Protobuf.Animal.Animal();
+            }
+            input.ReadMessage(Animal);
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            if (timestamp_ == null) {
+              Timestamp = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+            }
+            input.ReadMessage(Timestamp);
+            break;
+          }
+          case 16: {
+            IsResponse = input.ReadBool();
+            break;
+          }
+          case 26: {
+            if (animal_ == null) {
+              Animal = new global::Dotnet.Protobuf.Animal.Animal();
+            }
+            input.ReadMessage(Animal);
             break;
           }
         }

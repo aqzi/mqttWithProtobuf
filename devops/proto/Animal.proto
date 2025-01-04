@@ -1,0 +1,16 @@
+syntax = "proto3";
+package animal;
+
+option csharp_namespace = "Dotnet.Protobuf.Animal";
+
+message Animal {
+    string animalName = 1;
+    AnimalType animalType = 2;
+}
+
+enum AnimalType {
+    UNKNOWN = 0;
+    DOG = 1;
+    CAT = 2;
+    BIRD = 3;
+}

@@ -1,20 +1,23 @@
-import { Test, User } from "../protobuf/Test";
+import { Test, User, TestWithAnimal } from "../protobuf/Test";
 import useSubscription from "../mqtt/UseSubscription";
 import { useRef, useState } from "react";
 import { MqttMessage } from "../mqtt/mqttProtocol";
+import { AnimalType } from "../protobuf/Animal";
 
 const SubscribeMsg = () => {
-    const [messages, setMessages] = useState<MqttMessage<Test|User>[]>([]);
+    const [messages, setMessages] = useState<MqttMessage<Test|User|TestWithAnimal>[]>([]);
 
     const counter = useRef(0);
 
     const handleReceive = (message: MqttMessage<any>) => {
-        let tmp: MqttMessage<Test|User>;
+        let tmp: MqttMessage<Test|User|TestWithAnimal>;
         
         if (message.msgClass.msgType === 'Test') {
             tmp = message as MqttMessage<Test>;
-        } else {
+        } else if (message.msgClass.msgType === 'User') {
             tmp = message as MqttMessage<User>;
+        } else {
+            tmp = message as MqttMessage<TestWithAnimal>
         }
 
         
@@ -32,20 +35,30 @@ const SubscribeMsg = () => {
         handleReceive
     )
 
-    const PayloadInfo: React.FC<{msg: MqttMessage<Test|User>}> = ({msg}) => {
+    const PayloadInfo: React.FC<{msg: MqttMessage<Test|User|TestWithAnimal>}> = ({msg}) => {
         if (msg.msgClass.msgType === 'Test') {
             const tmp = msg.payload as Test;
 
             return (
                 <li className="text-blue-400">Message: {tmp.msg}</li>
             );
-        } else {
+        } else if (msg.msgClass.msgType === 'User') {
             const tmp = msg.payload as User;
             
             return (
                 <>
                     <li className="text-blue-400">Name: {tmp.name}</li>
                     <li className="text-blue-400">Age: {tmp.age}</li>
+                </>
+            );
+        } else {
+            const tmp = msg.payload as TestWithAnimal;
+
+            return (
+                <>
+                    <li className="text-blue-400">AnimalName: {tmp.animal?.animalName}</li>
+                    <li className="text-blue-400">AnimalType: {tmp.animal?.animalType ? AnimalType[tmp.animal?.animalType] : 'undefined'}</li>
+                    <li className="text-blue-400">IsResponse: {tmp.isResponse}</li>
                 </>
             );
         }
