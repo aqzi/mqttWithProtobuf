@@ -6,15 +6,10 @@ namespace Dotnet.Mqtt.MqttHandlers;
 public class TestHandler(IMqttService mqttService) : IMqttHandler
 {
     private readonly IMqttService mqttService = mqttService;
-    private readonly List<string> subscriptions =
+    public IEnumerable<string> Subscriptions { get; } =
     [
         "event/test/#",
     ];
-
-    public List<string> GetSubscriptions()
-    {
-        return subscriptions;
-    }
 
     public async Task OnMessageReceive(string topic, object message)
     {

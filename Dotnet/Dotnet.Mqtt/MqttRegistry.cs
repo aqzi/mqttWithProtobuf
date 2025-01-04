@@ -65,7 +65,7 @@ public class MqttRegistry : IMqttRegistry
                 if (constructor != null) handler = (IMqttHandler)Activator.CreateInstance(type, mqttService)!;
                 else handler = (IMqttHandler)Activator.CreateInstance(type)!;
 
-                var topics = handler.GetSubscriptions();
+                var topics = handler.Subscriptions;
 
                 //store the handler with corresponding topic in the tree structure
                 foreach (var topic in topics)
