@@ -14,7 +14,6 @@ public interface IMqttRegistry
 public class MqttRegistry : IMqttRegistry
 {
     private readonly ConcurrentDictionary<string, MessageParser> parsers = new(); //key: namespace.msgType
-    //remark: a dict is a temporarly solution. A search tree would be a better choice for high performance!
     private readonly MqttTreeStructure handlers = new("root");
     
     public MqttRegistry(Assembly? assembly, IMqttService mqttservice)
@@ -59,7 +58,7 @@ public class MqttRegistry : IMqttRegistry
             foreach (var type in handlerTypes)
             {
                 // Check if the type has a constructor that accepts IMqttService
-                var constructor = type.GetConstructor(new[] { typeof(IMqttService) });
+                var constructor = type.GetConstructor([typeof(IMqttService)]);
 
                 IMqttHandler handler;
 

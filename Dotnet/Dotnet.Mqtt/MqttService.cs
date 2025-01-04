@@ -147,7 +147,7 @@ public class MqttService : IMqttService
         }
     }
 
-    public void Subscribe(List<string> topics)
+    public async void Subscribe(List<string> topics)
     {
         if (mqttClient != null && mqttClient.IsConnected)
         {
@@ -158,7 +158,7 @@ public class MqttService : IMqttService
                 subscriptionBuilder.WithTopicFilter(topic);
             }
 
-            mqttClient.SubscribeAsync(subscriptionBuilder.Build());
+            await mqttClient.SubscribeAsync(subscriptionBuilder.Build());
         }
     }
 }

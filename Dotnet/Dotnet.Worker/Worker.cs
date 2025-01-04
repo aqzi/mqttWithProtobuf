@@ -26,18 +26,16 @@ public class Worker(IMqttService mqttService, ILoggerFactory loggerFactory, AppS
         }
     }
 
-    public override Task StopAsync(CancellationToken cancellationToken)
+    public override async Task StopAsync(CancellationToken cancellationToken)
     {
         try
         {
-            mqttService.StopAsync().Wait();
+            await mqttService.StopAsync();
         }
         catch (Exception ex)
         {
             logger.LogError($"Err in StopAsync: {ex.Message}");
         }
-
-        return Task.CompletedTask;
     }
 
     private async void InitializeMqtt(CancellationToken stoppingToken)
@@ -62,7 +60,7 @@ public class Worker(IMqttService mqttService, ILoggerFactory loggerFactory, AppS
         //send connect info if needed
     }
 
-    private void OnMqttMessageReceived(object? sender, MqttApplicationMessageReceivedEventArgs e)
+    private async void OnMqttMessageReceived(object? sender, MqttApplicationMessageReceivedEventArgs e)
     {
         var arrTopic = e.ApplicationMessage.Topic.Split('/');
 
@@ -78,7 +76,7 @@ public class Worker(IMqttService mqttService, ILoggerFactory loggerFactory, AppS
             {
                 foreach (var handler in handlers)
                 {
-                    handler.OnMessageReceive(e.ApplicationMessage.Topic, message);
+                    await handler.OnMessageReceive(e.ApplicationMessage.Topic, message);
                 }
             }
         }

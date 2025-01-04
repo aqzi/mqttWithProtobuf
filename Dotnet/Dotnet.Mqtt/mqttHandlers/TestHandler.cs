@@ -16,7 +16,7 @@ public class TestHandler(IMqttService mqttService) : IMqttHandler
         return subscriptions;
     }
 
-    public void OnMessageReceive(string topic, object message)
+    public async Task OnMessageReceive(string topic, object message)
     {
         Console.WriteLine($"TestHandler received message on topic {topic}");
 
@@ -29,7 +29,7 @@ public class TestHandler(IMqttService mqttService) : IMqttHandler
                     Msg = $"Echo through dotnet => {test.Msg}",
                 };
                 
-                mqttService.Publish(MqttAction.EVENT, "testDotnet", "dotnet", "Test", "Test", testMsg.ToByteArray());
+                await mqttService.Publish(MqttAction.EVENT, "testDotnet", "dotnet", "Test", "Test", testMsg.ToByteArray());
 
                 break;
             case Proto.User user:
@@ -40,7 +40,7 @@ public class TestHandler(IMqttService mqttService) : IMqttHandler
                     Age = user.Age,
                 };
                 
-                mqttService.Publish(MqttAction.EVENT, "testDotnet", "dotnet", "Test", "User", userMsg.ToByteArray());
+                await mqttService.Publish(MqttAction.EVENT, "testDotnet", "dotnet", "Test", "User", userMsg.ToByteArray());
 
                 break;
             case Proto.TestWithAnimal animal:
@@ -51,7 +51,7 @@ public class TestHandler(IMqttService mqttService) : IMqttHandler
                     Animal = animal.Animal,
                 };
                 
-                mqttService.Publish(MqttAction.EVENT, "testDotnet", "dotnet", "Test", "TestWithAnimal", animalMsg.ToByteArray());
+                await mqttService.Publish(MqttAction.EVENT, "testDotnet", "dotnet", "Test", "TestWithAnimal", animalMsg.ToByteArray());
 
                 break;
             default:

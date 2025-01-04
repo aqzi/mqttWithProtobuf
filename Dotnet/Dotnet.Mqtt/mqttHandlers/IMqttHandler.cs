@@ -3,5 +3,5 @@ namespace Dotnet.Mqtt;
 public interface IMqttHandler
 {
     List<string> GetSubscriptions();
-    void OnMessageReceive(string topic, object message);
+    Task OnMessageReceive(string topic, object message);
 }
