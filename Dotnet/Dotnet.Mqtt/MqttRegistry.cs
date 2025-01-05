@@ -8,7 +8,7 @@ public interface IMqttRegistry
 {
     bool TryGetParser(string typeName, out MessageParser? parser);
     bool TryGetHandlers(string topic, out List<IMqttHandler>? handlersValue);
-    List<string> GetAllSubscriptions();
+    IEnumerable<string> GetAllSubscriptions();
 }
 
 public class MqttRegistry : IMqttRegistry
@@ -89,7 +89,7 @@ public class MqttRegistry : IMqttRegistry
         return tmp != null;
     }
 
-    public List<string> GetAllSubscriptions()
+    public IEnumerable<string> GetAllSubscriptions()
     {
         return handlers.GetAllSubscriptions(null);
     }

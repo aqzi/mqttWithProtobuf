@@ -183,9 +183,9 @@ public class MqttTreeStructure(string topic) : IEnumerable<MqttTreeStructure>
         return handlers;
     }
 
-    public List<string> GetAllSubscriptions(MqttTreeStructure? node)
+    public IEnumerable<string> GetAllSubscriptions(MqttTreeStructure? node)
     {
-        List<string> subscriptions = new();
+        List<string> subscriptions = [];
 
         var treeNode = node ?? GetRoot();
 
